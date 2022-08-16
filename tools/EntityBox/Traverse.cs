@@ -1,4 +1,6 @@
-// Traverse selection
+// Traverse selection.
+
+// The entity contains a special Blacklist to block switching to unwanted entity types.
 
 using System;
 using System.ComponentModel;
@@ -15,11 +17,11 @@ namespace System.Windows.Forms
 {
     public partial class EntityBox : Control
     {
-        const float traverseLamdaDelta = 0.7F;      // Lambdas
+        const float traverseLambdaDelta = 0.7F;      // Lambdas
 
         private bool IsViasInWire(Entity vias, Entity wire)
         {
-            float delta = traverseLamdaDelta;
+            float delta = traverseLambdaDelta;
 
             PointF start = new PointF(wire.LambdaX, wire.LambdaY);
             PointF end = new PointF(wire.LambdaEndX, wire.LambdaEndY);
@@ -54,7 +56,7 @@ namespace System.Windows.Forms
 
             if (source.IsWire())
             {
-                float maxDist = traverseLamdaDelta;
+                float maxDist = traverseLambdaDelta;
                 float dist;
                 List<Entity> viases = new List<Entity>();
 
@@ -70,6 +72,12 @@ namespace System.Windows.Forms
 
                 foreach (Entity entity in GetEntities())
                 {
+                    if (source.TraverseBlackList != null && entity.TraverseBlackList != null)
+                    {
+                        if (source.TraverseBlackList.Contains(entity.Type) || entity.TraverseBlackList.Contains(source.Type))
+                            continue;
+                    }
+
                     if (entity.Selected == false)
                     {
                         //
@@ -161,6 +169,12 @@ namespace System.Windows.Forms
 
                 foreach (Entity entity in GetEntities())
                 {
+                    if (source.TraverseBlackList != null && entity.TraverseBlackList != null)
+                    {
+                        if (source.TraverseBlackList.Contains(entity.Type) || entity.TraverseBlackList.Contains(source.Type))
+                            continue;
+                    }
+
                     if (entity.Selected == false)
                     {
                         //
@@ -254,6 +268,12 @@ namespace System.Windows.Forms
 
                 foreach (Entity entity in GetEntities())
                 {
+                    if (source.TraverseBlackList != null && entity.TraverseBlackList != null)
+                    {
+                        if (source.TraverseBlackList.Contains(entity.Type) || entity.TraverseBlackList.Contains(source.Type))
+                            continue;
+                    }
+
                     if (entity.Selected == false &&
                         (entity.Type == EntityType.ViasOutput || entity.Type == EntityType.ViasInout))
                     {

@@ -102,6 +102,7 @@ namespace System.Windows.Forms
         private bool[] lockScroll = new bool[3];
         private bool[] lockZoom = new bool[3];
         private bool selectEntitiesAfterAdd;
+        private bool wireSelectionAutoTraverse;
         private long UnserializeLastStamp = 0;
         private bool grayscale = false;
         private Point LastRMB = new Point(-1, -1);
@@ -149,6 +150,10 @@ namespace System.Windows.Forms
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
+        /// <summary>
+        /// Get a list of all entities. The hierarchy is destroyed (you get a regular linear list).
+        /// </summary>
+        /// <returns>A list of all entities.</returns>
         public List<Entity> GetEntities()
         {
             List<Entity> list = new List<Entity>();
